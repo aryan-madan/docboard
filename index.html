@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@heroicons/vue/solid/index.js"></script>
+  <script src="app.js" defer></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
+body {
+  font-family: 'Fira Code', monospace;
+  background-color: #2e3440;
+  color: #d8dee9;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.header {
+  background-color: #4c566a;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.navbar a {
+  color: #d8dee9;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #88c0d0;
+}
+
+.section {
+  background-color: #3b4252;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.title {
+  color: #88c0d0;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.label {
+  color: #d8dee9;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #4c566a;
+  background-color: #434c5e;
+  color: #d8dee9;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #88c0d0;
+}
+
+.btn {
+  background-color: #4c566a;
+  color: #d8dee9;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #88c0d0;
+  color: #2e3440;
+}
+
+.list-item {
+  background-color: #434c5e;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.list-item:hover {
+  background-color: #4c566a;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  </style>
+</head>
+<body class="flex min-h-screen">
+  <div class="flex flex-col md:flex-row md:min-h-screen w-full">
+    <div class="bg-gray-800 md:w-64 px-8 py-6">
+      <h1 class="text-white text-3xl font-bold mb-6">Docboard</h1>
+      <nav class="space-y-4">
+        <a href="#" class="flex items-center text-white hover:text-indigo-300 transition duration-300 rounded-lg px-4 py-2">
+          <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          Schedule Appointment
+        </a>
+        <a href="#" class="flex items-center text-white hover:text-indigo-300 transition duration-300 rounded-lg px-4 py-2">
+          <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+          </svg>
+          Scheduled Appointments
+        </a>
+      </nav>
+    </div>
+    <div class="flex-1 p-8">
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8">
+        <div id="scheduleAppointmentTab">
+          <h2 class="text-2xl font mb-4 text-white rounded-lg px-4 py-2">Schedule Appointment</h2>
+          <form id="appointmentForm" class="rounded-lg">
+            <div class="mb-4">
+              <label class="block text-gray-300 font-semibold mb-2" for="name">
+                Name
+              </label>
+              <input class="form-input bg-gray-700 text-white rounded-lg" id="name" type="text" placeholder="Enter your name">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-300 font-semibold mb-2" for="date">
+                Date
+              </label>
+              <input class="form-input bg-gray-700 text-white rounded-lg" id="date" type="date">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-300 font-semibold mb-2" for="time">
+                Time
+              </label>
+              <input class="form-input bg-gray-700 text-white rounded-lg" id="time" type="time">
+            </div>
+            <button class="btn w-full hover:bg-indigo-600 rounded-lg" type="submit" id="scheduleBtn">
+              Schedule Appointment
+            </button>
+          </form>
+        </div>
+        <div id="viewAppointmentsTab" class="hidden">
+          <h2 class="text-2xl font mb-4 text-white rounded-lg px-4 py-2">Scheduled Appointments</h2>
+          <div class="mb-4">
+            <label class="block text-gray-300 font-semibold mb-2" for="sortOption">
+              Sort by
+            </label>
+            <select class="form-input bg-gray-700 text-white rounded-lg" id="sortOption">
+              <option value="date">Date</option>
+              <option value="time">Time</option>
+            </select>
+          </div>
+          <ul class="list-none rounded-lg" id="appointmentList"></ul>
+        </div>
+        <div id="appointmentViewer" class="hidden">
+          <h2 class="text-2xl font-bold mb-4 text-center text-indigo-300 rounded-lg px-4 py-2">Appointment Details</h2>
+          <div class="bg-gray-800 rounded-xl shadow-md p-6">
+            <form id="editAppointmentForm" class="rounded-lg">
+              <div class="mb-4">
+                <label class="block text-gray-300 font-semibold mb-2" for="viewerName">
+                  Name
+                </label>
+                <input class="form-input bg-gray-700 text-white rounded-lg" id="viewerName" type="text">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-300 font-semibold mb-2" for="viewerDate">
+                  Date
+                </label>
+                <input class="form-input bg-gray-700 text-white rounded-lg" id="viewerDate" type="date">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-300 font-semibold mb-2" for="viewerTime">
+                  Time
+                </label>
+                <input class="form-input bg-gray-700 text-white rounded-lg" id="viewerTime" type="time">
+              </div>
+              <div class="flex justify-center mt-4">
+                <button id="saveBtn" class="btn mr-2 hover:bg-indigo-600 rounded-lg">Save</button>
+                <button id="cancelBtn" class="btn hover:bg-indigo-600 rounded-lg">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
