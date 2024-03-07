@@ -1,6 +1,20 @@
 // Array to store appointments
 let appointments = [];
 
+// Function to load appointments from localStorage
+function loadAppointments() {
+    const savedAppointments = localStorage.getItem('appointments');
+    if (savedAppointments) {
+        appointments = JSON.parse(savedAppointments);
+        renderAppointments();
+    }
+}
+
+// Function to save appointments to localStorage
+function saveAppointments() {
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+}
+
 // Function to add a new appointment
 function addAppointment(patientName, appointmentDate, appointmentTime) {
     const appointment = {
@@ -9,6 +23,7 @@ function addAppointment(patientName, appointmentDate, appointmentTime) {
         appointmentTime,
     };
     appointments.push(appointment);
+    saveAppointments(); // Save appointments after adding a new one
     renderAppointments();
 }
 
@@ -72,6 +87,7 @@ function editAppointment(index) {
         appointment.patientName = patientName;
         appointment.appointmentDate = appointmentDate;
         appointment.appointmentTime = appointmentTime;
+        saveAppointments(); // Save appointments after editing
         renderAppointments();
     }
 }
@@ -80,6 +96,7 @@ function editAppointment(index) {
 function deleteAppointment(index) {
     if (confirm('Are you sure you want to delete this appointment?')) {
         appointments.splice(index, 1);
+        saveAppointments(); // Save appointments after deleting
         renderAppointments();
     }
 }
@@ -136,4 +153,4 @@ taskButtons.forEach((btn, index) => {
 });
 
 // Render initial appointments (if any)
-renderAppointments();
+loadAppointments();

@@ -196,6 +196,7 @@ input[type="time"]:focus {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     color: #eceff4;
+    position: relative;
 }
 
 .appointment:hover {
@@ -211,6 +212,11 @@ input[type="time"]:focus {
     font-weight: 500;
 }
 
+.appointment-buttons {
+    display: flex;
+    align-items: flex-end;
+}
+
 .edit-btn,
 .delete-btn {
     font-family: 'Switzer', sans-serif;
@@ -219,13 +225,8 @@ input[type="time"]:focus {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
-    margin-left: 5px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    font-size: 14px;
-    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
 .edit-btn::before,
@@ -245,6 +246,10 @@ input[type="time"]:focus {
 .edit-btn:hover::before,
 .delete-btn:hover::before {
     transform: translateX(0);
+}
+
+.delete-btn {
+    margin-left: 5px;
 }
 
 #sort-by-time {
