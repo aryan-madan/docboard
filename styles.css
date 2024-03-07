@@ -213,6 +213,7 @@ input[type="time"]:focus {
 
 .edit-btn,
 .delete-btn {
+    font-family: 'Switzer', sans-serif;
     background-color: #88c0d0;
     color: #2e3440;
     border: none;
@@ -283,4 +284,23 @@ input[type="time"]:focus {
 
 #sort-by-time button:hover::before {
     transform: translateX(0);
+}
+
+@media only screen and (max-width: 600px) {
+    
+    body {
+        overflow-y: hidden;
+    }
+    
+    .container {
+        width: 100vw;
+        border-radius: 0;
+        box-shadow: none;
+        height: 100vh;
+        padding-top: 7vh;
+    }
+    
+    .tab-content {
+        height: 80%;
+    }
 }
