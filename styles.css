@@ -1,23 +1,25 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Switzer', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #eceff4;
+    background-color: #2e3440;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #eceff4;
 }
 
 .container {
-    background-color: #e5e9f0;
+    background-color: #3b4252;
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(136, 192, 208, 0.2);
     padding: 20px;
     max-width: 800px;
     width: 100%;
     overflow: hidden;
+    height: 80vh;
 }
 
 .taskbar {
@@ -27,9 +29,10 @@ body {
 }
 
 .task-btn {
+    font-family: 'Switzer', sans-serif;
     background-color: transparent;
     border: none;
-    color: #2e3440;
+    color: #eceff4;
     cursor: pointer;
     font-size: 16px;
     padding: 10px 20px;
@@ -58,15 +61,15 @@ body {
 
 .task-btn.active {
     background-color: #88c0d0;
-    color: #eceff4;
+    color: #2e3440;
     border-radius: 5px;
 }
 
 .tab-content {
-    background-color: #eceff4;
+    background-color: #2e3440;
     border-radius: 10px;
     padding: 20px;
-    height: 60vh;
+    height: 66vh;
     overflow-y: hidden;
 }
 
@@ -83,6 +86,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -100,7 +104,7 @@ form {
 label {
     font-weight: 500;
     margin-bottom: 5px;
-    color: #2e3440;
+    color: #eceff4;
 }
 
 input[type="text"],
@@ -109,10 +113,10 @@ input[type="time"] {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-    border: 1px solid #d8dee9;
+    border: 1px solid #4c566a;
     transition: border-color 0.3s ease;
-    background-color: #eceff4;
-    color: #2e3440;
+    background-color: #3b4252;
+    color: #eceff4;
     font-size: 16px;
 }
 
@@ -124,9 +128,10 @@ input[type="time"]:focus {
 }
 
 .submit-btn {
+    font-family: 'Switzer', sans-serif;
     padding: 10px 20px;
     background-color: #88c0d0;
-    color: #eceff4;
+    color: #2e3440;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -163,10 +168,10 @@ input[type="time"]:focus {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-    border: 1px solid #d8dee9;
+    border: 1px solid #4c566a;
     transition: border-color 0.3s ease;
-    background-color: #eceff4;
-    color: #2e3440;
+    background-color: #3b4252;
+    color: #eceff4;
     font-size: 16px;
 }
 
@@ -182,7 +187,7 @@ input[type="time"]:focus {
 }
 
 .appointment {
-    background-color: #e5e9f0;
+    background-color: #4c566a;
     padding: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -190,11 +195,11 @@ input[type="time"]:focus {
     align-items: center;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    color: #2e3440;
+    color: #eceff4;
 }
 
 .appointment:hover {
-    background-color: #d8dee9;
+    background-color: #5e81ac;
 }
 
 .appointment-info {
@@ -209,7 +214,7 @@ input[type="time"]:focus {
 .edit-btn,
 .delete-btn {
     background-color: #88c0d0;
-    color: #eceff4;
+    color: #2e3440;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -248,10 +253,11 @@ input[type="time"]:focus {
 }
 
 #sort-by-time button {
+    font-family: 'Switzer', sans-serif;
     margin-left: 10px;
     padding: 5px 10px;
     background-color: #88c0d0;
-    color: #eceff4;
+    color: #2e3440;
     border: none;
     cursor: pointer;
     border-radius: 5px;
