@@ -197,6 +197,7 @@ input[type="time"]:focus {
     transition: background-color 0.3s ease;
     color: #eceff4;
     position: relative;
+    height: 88px;
 }
 
 .appointment:hover {
@@ -206,6 +207,11 @@ input[type="time"]:focus {
 .appointment-info {
     display: flex;
     flex-direction: column;
+    line-height: 2px;
+}
+
+.appointment-info p {
+    line-height: 1px;
 }
 
 .appointment-time {
@@ -219,6 +225,7 @@ input[type="time"]:focus {
 
 .edit-btn,
 .delete-btn {
+    margin-top: 60px;
     font-family: 'Switzer', sans-serif;
     background-color: #88c0d0;
     color: #2e3440;
@@ -249,7 +256,7 @@ input[type="time"]:focus {
 }
 
 .delete-btn {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 #sort-by-time {
