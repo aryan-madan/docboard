@@ -256,7 +256,11 @@ input[type="time"]:focus {
 }
 
 .delete-btn {
-    margin-left: 2px;
+    margin-left: 10px;
+}
+
+.edit-btn {
+    margin-left: auto;
 }
 
 #sort-by-time {
