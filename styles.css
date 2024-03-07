@@ -22,6 +22,10 @@ body {
     height: 80vh;
 }
 
+.credits {
+    text-align: center;
+}
+
 .taskbar {
     display: flex;
     justify-content: space-around;
