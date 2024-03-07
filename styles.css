@@ -8,6 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     color: #eceff4;
+    overflow: hidden;
 }
 
 .container {
@@ -169,6 +170,7 @@ input[type="time"]:focus {
 }
 
 #search-input {
+    font-family: 'Switzer', sans-serif;
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
@@ -208,6 +210,10 @@ input[type="time"]:focus {
 
 .appointment:hover {
     background-color: #5e81ac;
+}
+
+#schedule-appointment h2{
+    margin-top: 0;
 }
 
 .appointment-info {
@@ -275,15 +281,16 @@ input[type="time"]:focus {
 }
 
 #sort-by-time {
+    width: 100%;
     margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 #sort-by-time button {
     font-family: 'Switzer', sans-serif;
-    margin: 5px;
     padding: 5px 10px;
+    max-width: 49%;
     background-color: #88c0d0;
     color: #2e3440;
     border: none;
@@ -311,6 +318,22 @@ input[type="time"]:focus {
 
 #sort-by-time button:hover::before {
     transform: translateX(0);
+}
+
+.gradientdown {
+    position: fixed; /* Change to fixed */
+    bottom: 150px;
+    left: 50%;
+    z-index: 1;
+    width: 75%;
+    height: 1%;
+    background: linear-gradient(to top, #2e3440, transparent);
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: auto;
+    max-width: 800px;
+    pointer-events: none;
+    transform: translateX(-50%);
 }
 
 @media only screen and (max-width: 600px) {
