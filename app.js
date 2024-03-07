@@ -154,3 +154,12 @@ taskButtons.forEach((btn, index) => {
 
 // Render initial appointments (if any)
 loadAppointments();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const patientNames = document.querySelectorAll('.patient-name');
+    patientNames.forEach(function(name) {
+        if (name.textContent.length > 10) {
+            name.title = name.textContent;
+        }
+    });
+});
