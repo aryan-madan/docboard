@@ -21,6 +21,7 @@ function addAppointment(patientName, appointmentDate, appointmentTime) {
         patientName,
         appointmentDate,
         appointmentTime,
+        expired: false // Initialize as not expired
     };
     appointments.push(appointment);
     saveAppointments();
@@ -37,23 +38,30 @@ function isAppointmentExpired(appointment) {
 // Function to render appointments in the UI
 function renderAppointments(searchTerm = '') {
     const appointmentsList = document.getElementById('appointments-list');
-    const expiredAppointmentsList = document.getElementById('expired-appointments-list');
     appointmentsList.innerHTML = '';
-    expiredAppointmentsList.innerHTML = '';
 
-    const filteredAppointments = appointments.filter(appointment => {
-        const appointmentInfo = `${appointment.patientName} ${appointment.appointmentDate} ${appointment.appointmentTime}`.toLowerCase();
-        return appointmentInfo.includes(searchTerm.toLowerCase());
+    appointments.forEach((appointment, index) => {
+        if (!appointment.expired) {
+            // Render only active appointments
+            const appointmentElement = createAppointmentElement(appointment, index);
+            appointmentsList.appendChild(appointmentElement);
+        }
     });
 
-    filteredAppointments.forEach((appointment, index) => {
-        const isExpired = isAppointmentExpired(appointment);
-        const appointmentElement = createAppointmentElement(appointment, index);
+    renderExpiredAppointments();
+}
 
-        if (isExpired) {
+// Function to render expired appointments in the UI
+function renderExpiredAppointments(searchTerm = '') {
+    const expiredAppointmentsList = document.getElementById('expired-appointments-list');
+    expiredAppointmentsList.innerHTML = '';
+
+    appointments.forEach((appointment, index) => {
+        if (appointment.expired) {
+            // Render only expired appointments
+            const appointmentElement = createAppointmentElement(appointment, index);
+            appointmentElement.classList.add('expired-appointment');
             expiredAppointmentsList.appendChild(appointmentElement);
-        } else {
-            appointmentsList.appendChild(appointmentElement);
         }
     });
 }
@@ -80,22 +88,28 @@ function createAppointmentElement(appointment, index) {
     appointmentInfo.appendChild(appointmentDate);
     appointmentInfo.appendChild(appointmentTime);
 
-    const editBtn = document.createElement('button');
-    editBtn.classList.add('edit-btn');
-    editBtn.textContent = 'Edit';
-    editBtn.addEventListener('click', () => editAppointment(index));
-
+    // Create the delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', () => deleteAppointment(index));
 
     appointmentElement.appendChild(appointmentInfo);
-    appointmentElement.appendChild(editBtn);
+
+    // If the appointment is not expired, add the edit button
+    if (!appointment.expired) {
+        const editBtn = document.createElement('button');
+        editBtn.classList.add('edit-btn');
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => editAppointment(index));
+        appointmentElement.appendChild(editBtn);
+    }
+
     appointmentElement.appendChild(deleteBtn);
 
     return appointmentElement;
 }
+
 
 // Function to edit an appointment
 function editAppointment(index) {
@@ -157,6 +171,24 @@ searchInput.addEventListener('input', () => {
     renderAppointments(searchTerm);
 });
 
+// Event listener for expired appointments search input
+const expiredSearchInput = document.getElementById('expired-search-input');
+expiredSearchInput.addEventListener('input', () => {
+    const searchTerm = expiredSearchInput.value;
+    renderExpiredAppointments(searchTerm);
+});
+
+// Event listener for delete all expired appointments button
+const deleteAllExpiredBtn = document.getElementById('delete-all-expired');
+deleteAllExpiredBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete all expired appointments?')) {
+        appointments = appointments.filter(appointment => !isAppointmentExpired(appointment));
+        saveAppointments();
+        renderAppointments();
+        renderExpiredAppointments();
+    }
+});
+
 // Event listeners for taskbar buttons
 const taskButtons = document.querySelectorAll('.task-btn');
 const tabContents = document.querySelectorAll('.tab');
@@ -171,5 +203,21 @@ taskButtons.forEach((btn, index) => {
     });
 });
 
+function checkExpiredAppointments() {
+    const currentDate = new Date();
+    appointments.forEach(appointment => {
+        const appointmentDate = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
+        if (appointmentDate < currentDate) {
+            appointment.expired = true; // Mark the appointment as expired
+        }
+    });
+
+    saveAppointments();
+    renderAppointments(); // Render both active and expired appointments
+}
+
 // Render initial appointments (if any)
 loadAppointments();
+
+// Check for expired appointments every minute
+setInterval(checkExpiredAppointments, 60000);

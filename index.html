@@ -38,11 +38,18 @@
                 <div id="appointments-list"></div>
             </section>
             <section id="expired-appointments" class="tab">
-                <h2>Expired Appointments</h2>
+                <div class="expired-header">
+                    <h2>Expired Appointments</h2>
+                    <div class=expiredflex>
+                    <input type="text" id="expired-search-input" placeholder="Search expired appointments">
+                    <button id="delete-all-expired" class="delete-all-btn"><i class="fas fa-trash-alt"></i>Delete All</button>
+                    </div>
+                </div>
                 <div id="expired-appointments-list"></div>
             </section>
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/bbe5e893bd.js" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>
 </html>
