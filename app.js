@@ -23,14 +23,23 @@ function addAppointment(patientName, appointmentDate, appointmentTime) {
         appointmentTime,
     };
     appointments.push(appointment);
-    saveAppointments(); // Save appointments after adding a new one
+    saveAppointments();
     renderAppointments();
+}
+
+// Function to check if an appointment is expired
+function isAppointmentExpired(appointment) {
+    const currentDate = new Date();
+    const appointmentDate = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
+    return appointmentDate < currentDate;
 }
 
 // Function to render appointments in the UI
 function renderAppointments(searchTerm = '') {
     const appointmentsList = document.getElementById('appointments-list');
+    const expiredAppointmentsList = document.getElementById('expired-appointments-list');
     appointmentsList.innerHTML = '';
+    expiredAppointmentsList.innerHTML = '';
 
     const filteredAppointments = appointments.filter(appointment => {
         const appointmentInfo = `${appointment.patientName} ${appointment.appointmentDate} ${appointment.appointmentTime}`.toLowerCase();
@@ -38,42 +47,54 @@ function renderAppointments(searchTerm = '') {
     });
 
     filteredAppointments.forEach((appointment, index) => {
-        const appointmentElement = document.createElement('div');
-        appointmentElement.classList.add('appointment');
+        const isExpired = isAppointmentExpired(appointment);
+        const appointmentElement = createAppointmentElement(appointment, index);
 
-        const appointmentInfo = document.createElement('div');
-        appointmentInfo.classList.add('appointment-info');
-
-        const patientName = document.createElement('p');
-        patientName.textContent = `Patient: ${appointment.patientName}`;
-
-        const appointmentDate = document.createElement('p');
-        appointmentDate.textContent = `Date: ${appointment.appointmentDate}`;
-
-        const appointmentTime = document.createElement('p');
-        appointmentTime.classList.add('appointment-time');
-        appointmentTime.textContent = `Time: ${appointment.appointmentTime}`;
-
-        appointmentInfo.appendChild(patientName);
-        appointmentInfo.appendChild(appointmentDate);
-        appointmentInfo.appendChild(appointmentTime);
-
-        const editBtn = document.createElement('button');
-        editBtn.classList.add('edit-btn');
-        editBtn.textContent = 'Edit';
-        editBtn.addEventListener('click', () => editAppointment(index));
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.addEventListener('click', () => deleteAppointment(index));
-
-        appointmentElement.appendChild(appointmentInfo);
-        appointmentElement.appendChild(editBtn);
-        appointmentElement.appendChild(deleteBtn);
-
-        appointmentsList.appendChild(appointmentElement);
+        if (isExpired) {
+            expiredAppointmentsList.appendChild(appointmentElement);
+        } else {
+            appointmentsList.appendChild(appointmentElement);
+        }
     });
+}
+
+// Function to create an appointment HTML element
+function createAppointmentElement(appointment, index) {
+    const appointmentElement = document.createElement('div');
+    appointmentElement.classList.add('appointment');
+
+    const appointmentInfo = document.createElement('div');
+    appointmentInfo.classList.add('appointment-info');
+
+    const patientName = document.createElement('p');
+    patientName.textContent = `Patient: ${appointment.patientName}`;
+
+    const appointmentDate = document.createElement('p');
+    appointmentDate.textContent = `Date: ${appointment.appointmentDate}`;
+
+    const appointmentTime = document.createElement('p');
+    appointmentTime.classList.add('appointment-time');
+    appointmentTime.textContent = `Time: ${appointment.appointmentTime}`;
+
+    appointmentInfo.appendChild(patientName);
+    appointmentInfo.appendChild(appointmentDate);
+    appointmentInfo.appendChild(appointmentTime);
+
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('edit-btn');
+    editBtn.textContent = 'Edit';
+    editBtn.addEventListener('click', () => editAppointment(index));
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', () => deleteAppointment(index));
+
+    appointmentElement.appendChild(appointmentInfo);
+    appointmentElement.appendChild(editBtn);
+    appointmentElement.appendChild(deleteBtn);
+
+    return appointmentElement;
 }
 
 // Function to edit an appointment
@@ -87,7 +108,7 @@ function editAppointment(index) {
         appointment.patientName = patientName;
         appointment.appointmentDate = appointmentDate;
         appointment.appointmentTime = appointmentTime;
-        saveAppointments(); // Save appointments after editing
+        saveAppointments();
         renderAppointments();
     }
 }
@@ -96,7 +117,7 @@ function editAppointment(index) {
 function deleteAppointment(index) {
     if (confirm('Are you sure you want to delete this appointment?')) {
         appointments.splice(index, 1);
-        saveAppointments(); // Save appointments after deleting
+        saveAppointments();
         renderAppointments();
     }
 }
@@ -142,11 +163,9 @@ const tabContents = document.querySelectorAll('.tab');
 
 taskButtons.forEach((btn, index) => {
     btn.addEventListener('click', () => {
-        // Remove active class from all task buttons and tabs
         taskButtons.forEach(btn => btn.classList.remove('active'));
         tabContents.forEach(tab => tab.classList.remove('active'));
 
-        // Add active class to the clicked task button and corresponding tab
         btn.classList.add('active');
         tabContents[index].classList.add('active');
     });
@@ -154,12 +173,3 @@ taskButtons.forEach((btn, index) => {
 
 // Render initial appointments (if any)
 loadAppointments();
-
-document.addEventListener("DOMContentLoaded", function() {
-    const patientNames = document.querySelectorAll('.patient-name');
-    patientNames.forEach(function(name) {
-        if (name.textContent.length > 10) {
-            name.title = name.textContent;
-        }
-    });
-});

@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocBoard</title>
-    <link href="https://api.fontshare.com/v2/css?f[]=switzer@600,700,400,200&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@2,101,600,701,800,501,601,900,100,700,901,400,201,401,200,300,301,801,500,1&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div class="container">
         <div class="taskbar">
-            <button class="task-btn active" data-tab="schedule-appointment">Schedule Appointment</button>
-            <button class="task-btn" data-tab="view-appointments">View Appointments</button>
+            <button class="task-btn active" data-tab="schedule-appointment">Schedule</button>
+            <button class="task-btn" data-tab="view-appointments">View</button>
+            <button class="task-btn" data-tab="expired-appointments">Expired</button>
         </div>
-
         <div class="tab-content">
             <section id="schedule-appointment" class="tab active">
                 <h2>New Appointment</h2>
                 <form>
                     <label for="patient-name">Patient Name:</label>
                     <input type="text" id="patient-name" name="patient-name" required>
-
                     <label for="appointment-date">Appointment Date:</label>
                     <input type="date" id="appointment-date" name="appointment-date" required>
-
                     <label for="appointment-time">Appointment Time:</label>
                     <input type="time" id="appointment-time" name="appointment-time" required>
-
                     <button type="submit" class="submit-btn">
                         <span>Schedule Appointment</span>
                     </button>
                 </form>
             </section>
-
             <section id="view-appointments" class="tab">
                 <input type="text" id="search-input" placeholder="Search appointments...">
                 <div id="sort-by-time">
                     <button id="sort-asc">Sort by Time (Ascending)</button>
                     <button id="sort-desc">Sort by Time (Descending)</button>
                 </div>
-                <div class=gradientup></div>
-                <div id="appointments-list">
-                    <!-- Appointments will be dynamically added here -->
-                </div>
-                <p class=credits>made by Ary.</p>
+                <div id="appointments-list"></div>
+            </section>
+            <section id="expired-appointments" class="tab">
+                <h2>Expired Appointments</h2>
+                <div id="expired-appointments-list"></div>
             </section>
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
-
 </html>
