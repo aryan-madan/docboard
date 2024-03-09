@@ -36,7 +36,7 @@ body {
   color: #1a2e4d;
   cursor: pointer;
   font-size: 16px;
-  padding: 10px 20px;
+  padding: 10px 5px;
   transition: background-color 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -319,6 +319,8 @@ h2 {
   display: flex;
   align-items: center;
     height: 43px;
+    width: 45%;
+    text-align: center;
 }
 
 .delete-all-btn i {
@@ -336,7 +338,7 @@ h2 {
   color: #1a2e4d;
   font-size: 16px;
   text-overflow: ellipsis;
-    width: auto;
+    width: 100%;
 }
 
 #expired-search-input:focus {
